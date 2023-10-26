@@ -47,24 +47,28 @@ public class ArticlesController extends ApiController {
     @Operation(summary= "Create a new article")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
-    public UCSBDate postArticle(
-            @Parameter(name="quarterYYYYQ") @RequestParam String quarterYYYYQ,
-            @Parameter(name="name") @RequestParam String name,
-            @Parameter(name="localDateTime", description="in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("localDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTime)
+    public Article postArticle(
+            @Parameter(name="title") @RequestParam String title,
+            @Parameter(name="url") @RequestParam String url,
+            @Parameter(name="explaination") @RequestParam String explaination,
+            @Parameter(name="email") @RequestParam String email,
+            @Parameter(name="dateAdded", description="in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("dateAdded") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateAdded)
             throws JsonProcessingException {
 
         // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
         // See: https://www.baeldung.com/spring-date-parameters
 
-        log.info("localDateTime={}", localDateTime);
+        log.info("dateAdded={}", dateAdded);
 
-        UCSBDate ucsbDate = new UCSBDate();
-        ucsbDate.setQuarterYYYYQ(quarterYYYYQ);
-        ucsbDate.setName(name);
-        ucsbDate.setLocalDateTime(localDateTime);
+        Article article = new Article();
+        article.setTitle(title);
+        article.setUrl(url);
+        article.setExplaination(explaination);
+        article.setEmail(email);
+        article.setDateAdded(dateAdded);
 
-        UCSBDate savedUcsbDate = ucsbDateRepository.save(ucsbDate);
+        Article savedArticle = articleRepository.save(article);
 
-        return savedUcsbDate;
+        return savedArticle;
     }
 }
