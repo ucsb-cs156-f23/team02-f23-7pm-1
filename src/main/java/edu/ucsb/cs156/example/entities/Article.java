@@ -19,6 +19,9 @@ import lombok.Builder;
 @Entity(name = "articles")
 public class Article {
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private long id;
+  
   private String title;
   private String url;
   private String explaination;
