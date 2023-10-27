@@ -82,4 +82,25 @@ public class ArticlesController extends ApiController {
 
         return article;
     }
+
+    @Operation(summary= "Update a single article")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public Article updateArticle(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid Article incoming) {
+
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Article.class, id));
+
+        article.setTitle(incoming.getTitle());
+        article.setUrl(incoming.getUrl());
+        article.setExplaination(incoming.getExplaination());
+        article.setEmail(incoming.getEmail());
+        article.setDateAdded(incoming.getDateAdded());
+
+        articleRepository.save(article);
+
+        return article;
+    }
 }
