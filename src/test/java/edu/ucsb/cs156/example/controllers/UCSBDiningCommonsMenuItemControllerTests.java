@@ -3,8 +3,8 @@ package edu.ucsb.cs156.example.controllers;
 import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
 import edu.ucsb.cs156.example.ControllerTestCase;
-import edu.ucsb.cs156.example.entities.UCSBDate;
-import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
+import edu.ucsb.cs156.example.entities.UCSBDiningCommonsMenuItem;
+import edu.ucsb.cs156.example.repositories.UCSBDiningCommonsMenuItemRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,15 +34,15 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest(controllers = UCSBDatesController.class)
 @Import(TestConfig.class)
-public class UCSBDatesControllerTests extends ControllerTestCase {
+public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase {
 
         @MockBean
-        UCSBDateRepository ucsbDateRepository;
+        UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItemRepository;
 
         @MockBean
         UserRepository userRepository;
 
-        // Tests for GET /api/ucsbdates/all
+        // Tests for GET /api/ucsbdiningcommonsmenuitems/all
         
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
