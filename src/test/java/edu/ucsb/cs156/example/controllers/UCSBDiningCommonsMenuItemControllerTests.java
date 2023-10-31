@@ -43,18 +43,18 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
         @MockBean
         UserRepository userRepository;
 
-        // Tests for GET /api/ucsbdiningcommonsmenuitems/all
+        // Tests for GET /api/UCSBDiningCommonsMenuItem/all
         
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
-                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitems/all"))
+                mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
                                 .andExpect(status().is(403)); // logged out users can't get all
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void logged_in_users_can_get_all() throws Exception {
-                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitems/all"))
+                mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
                                 .andExpect(status().is(200)); // logged
         }
 
@@ -81,7 +81,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                 when(ucsbDiningCommonsMenuItemRepository.findAll()).thenReturn(expectedMenuItems);
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/ucsbdiningcommonsmenuitems/all"))
+                MvcResult response = mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -92,7 +92,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                 assertEquals(expectedJson, responseString);
         }
 
-        // Tests for POST /api/ucsbdiningcommonsmenuitems/post...
+        // Tests for POST /api/UCSBDiningCommonsMenuItem/post...
 
         @Test
         public void logged_out_users_cannot_post() throws Exception {
@@ -135,7 +135,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
 
 
-        // Tests for GET /api/ucsbdiningcommonsmenuitems?id=...
+        // Tests for GET /api/UCSBDiningCommonsMenuItem?id=...
 
         @Test
         public void logged_out_users_cannot_get_by_id() throws Exception {
