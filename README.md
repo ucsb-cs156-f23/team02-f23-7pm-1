@@ -1,5 +1,14 @@
 # team02-f23-7pm-1
 
+| Table                       | Team Member  | Github Id     |
+|-----------------------------|--------------|---------------|
+| `UCSBDiningCommonsMenuItem` | Carson       | Irreflexive   |
+| `UCSBOrganization`          | Karankumar   | mageswarankk  |
+| `RecommendationRequest`     | Daniel       | daniel-li2021 |
+| `MenuItemReview`            | Roberto      | rdoumeth      |
+| `HelpRequest`               | Madhav       | madhav-ucsb   |
+| `Articles`                  | Joseph       | awesomebob35  |
+
 Instructions: <https://ucsb-cs156.github.io/f23/lab/team02.html>
 
 TODO: Add a link to the deployed Dokku app for your team here, e.g. (We're missing QA Deployment)
