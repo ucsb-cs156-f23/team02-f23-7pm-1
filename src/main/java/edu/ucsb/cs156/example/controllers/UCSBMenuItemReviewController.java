@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,11 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import edu.ucsb.cs156.example.entities.UCSBDate;
 import edu.ucsb.cs156.example.entities.UCSBMenuItemReview;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBMenuItemReviewRepository;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -93,4 +92,14 @@ public class UCSBMenuItemReviewController extends ApiController {
         return ucsbMenuItemReview;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteUCSBMenuItemReview(
+            @Parameter(name="id") @RequestParam Long id) {
+        UCSBMenuItemReview ucsbMenuItemReview = ucsbMenuItemReviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBMenuItemReview.class, id));
+
+        ucsbMenuItemReviewRepository.delete(ucsbMenuItemReview);
+        return genericMessage("UCSBMenuItemReview with id %s deleted".formatted(id));
+    }
 }
