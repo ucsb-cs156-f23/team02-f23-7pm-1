@@ -1,38 +1,33 @@
 package edu.ucsb.cs156.example.controllers;
 
-import edu.ucsb.cs156.example.repositories.UserRepository;
-import edu.ucsb.cs156.example.testconfig.TestConfig;
-import edu.ucsb.cs156.example.ControllerTestCase;
-import edu.ucsb.cs156.example.entities.UCSBDate;
-import edu.ucsb.cs156.example.entities.UCSBMenuItemReview;
-import edu.ucsb.cs156.example.repositories.UCSBDateRepository;
-import edu.ucsb.cs156.example.repositories.UCSBMenuItemReviewRepository;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MvcResult;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-
-import java.time.LocalDateTime;
-
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MvcResult;
+
+import edu.ucsb.cs156.example.ControllerTestCase;
+import edu.ucsb.cs156.example.entities.UCSBMenuItemReview;
+import edu.ucsb.cs156.example.repositories.UCSBMenuItemReviewRepository;
+import edu.ucsb.cs156.example.repositories.UserRepository;
+import edu.ucsb.cs156.example.testconfig.TestConfig;
 
 @WebMvcTest(controllers = UCSBMenuItemReviewController.class)
 @Import(TestConfig.class)
@@ -62,7 +57,7 @@ public class UCSBMenuItemReviewControllerTests extends ControllerTestCase {
 
     @WithMockUser(roles = { "USER" })
     @Test
-    public void logged_in_user_can_get_all_ucsbdates() throws Exception {
+    public void logged_in_user_can_get_all_ucsbmenuitemreviews() throws Exception {
 
             // arrange
             LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
@@ -146,6 +141,62 @@ public class UCSBMenuItemReviewControllerTests extends ControllerTestCase {
             String expectedJson = mapper.writeValueAsString(ucsbReview1);
             String responseString = response.getResponse().getContentAsString();
             assertEquals(expectedJson, responseString);
+    }
+
+    @Test
+    public void logged_out_users_cannot_get_by_id() throws Exception {
+            mockMvc.perform(get("/api/ucsbmenuitemreview?id=7"))
+                            .andExpect(status().is(403)); // logged out users can't get by id
+    }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
+
+            // arrange
+            LocalDateTime ucsbDate1 = LocalDateTime.parse("2022-01-03T00:00:00");
+
+            UCSBMenuItemReview ucsbReview1 = UCSBMenuItemReview.builder()
+                            .itemId(1)
+                            .stars(3)
+                            .reviewerEmail("email@ucsb.edu")
+                            .dateReviewed(ucsbDate1)
+                            .comments("some-comment")
+                            .build();
+
+
+            when(ucsbMenuItemReviewRepository.findById(eq(7L))).thenReturn(Optional.of(ucsbReview1));
+
+            // act
+            MvcResult response = mockMvc.perform(get("/api/ucsbmenuitemreview?id=7"))
+                            .andExpect(status().isOk()).andReturn();
+
+            // assert
+
+            verify(ucsbMenuItemReviewRepository, times(1)).findById(eq(7L));
+            String expectedJson = mapper.writeValueAsString(ucsbReview1);
+            String responseString = response.getResponse().getContentAsString();
+            assertEquals(expectedJson, responseString);
+    }
+
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
+
+            // arrange
+
+            when(ucsbMenuItemReviewRepository.findById(eq(7L))).thenReturn(Optional.empty());
+
+            // act
+            MvcResult response = mockMvc.perform(get("/api/ucsbmenuitemreview?id=7"))
+                            .andExpect(status().isNotFound()).andReturn();
+
+            // assert
+
+            verify(ucsbMenuItemReviewRepository, times(1)).findById(eq(7L));
+            Map<String, Object> json = responseToJson(response);
+            assertEquals("EntityNotFoundException", json.get("type"));
+            assertEquals("UCSBMenuItemReview with id 7 not found", json.get("message"));
     }
 
 }
