@@ -27,7 +27,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @Tag(name = &quot;UCSBDiningCommonsMenuItem&quot;)
-@RequestMapping(&quot;/api/ucsbdiningcommonsmenuitems&quot;)
+@RequestMapping(&quot;/api/UCSBDiningCommonsMenuItem&quot;)
 @RestController
 <span class="fc" id="L32">@Slf4j</span>
 <span class="fc" id="L33">public class UCSBDiningCommonsMenuItemController extends ApiController {</span>
@@ -74,6 +74,25 @@ import java.time.LocalDateTime;
 <span class="fc" id="L74">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItem.class, id));</span>
 
 <span class="fc" id="L76">        return ucsbDiningCommonsMenuItem;</span>
+    }
+
+    @Operation(summary= &quot;Update a ucsb dining commons menu item by id&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public UCSBDiningCommonsMenuItem updateUCSBDiningCommonsMenuItem(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid UCSBDiningCommonsMenuItem incoming) {
+        
+<span class="fc" id="L86">        UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem = ucsbDiningCommonsMenuItemRepository.findById(id)</span>
+<span class="fc" id="L87">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItem.class, id));</span>
+
+<span class="fc" id="L89">        ucsbDiningCommonsMenuItem.setName(incoming.getName());</span>
+<span class="fc" id="L90">        ucsbDiningCommonsMenuItem.setDiningCommonsCode(incoming.getDiningCommonsCode());</span>
+<span class="fc" id="L91">        ucsbDiningCommonsMenuItem.setStation(incoming.getStation());</span>
+
+<span class="fc" id="L93">        ucsbDiningCommonsMenuItemRepository.save(ucsbDiningCommonsMenuItem);</span>
+
+<span class="fc" id="L95">        return ucsbDiningCommonsMenuItem;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
