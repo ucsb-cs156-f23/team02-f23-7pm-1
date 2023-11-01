@@ -76,7 +76,7 @@ public class HelpRequestsController extends ApiController {
         return savedHelpRequest;
     }
 
-    @Operation(summary= "Get a single help request")
+    @Operation(summary= "Get a single help request by id")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")
     public HelpRequests getById(

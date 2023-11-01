@@ -148,7 +148,7 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
                 assertEquals(expectedJson, responseString);
         }
 
-        // Tests for GET /api/ucsbdates?id=...
+        // Tests for GET /api/helprequests?id=...
 
         @Test
         public void logged_out_users_cannot_get_by_id() throws Exception {
