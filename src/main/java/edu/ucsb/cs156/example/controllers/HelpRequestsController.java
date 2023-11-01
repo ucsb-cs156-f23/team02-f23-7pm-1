@@ -90,7 +90,7 @@ public class HelpRequestsController extends ApiController {
     @Operation(summary= "Delete a Help Request")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
-    public Object deleteUCSBDate(
+    public Object deleteHelpRequests(
             @Parameter(name="id") @RequestParam Long id) {
         HelpRequests helpRequest = helpRequestsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(HelpRequests.class, id));
@@ -102,7 +102,7 @@ public class HelpRequestsController extends ApiController {
     @Operation(summary= "Update a single help request")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
-    public HelpRequests updateUCSBDate(
+    public HelpRequests updateHelpRequests(
             @Parameter(name="id") @RequestParam Long id,
             @RequestBody @Valid HelpRequests incoming) {
 
@@ -111,8 +111,6 @@ public class HelpRequestsController extends ApiController {
         helpRequest.setRequesterEmail(incoming.getRequesterEmail());
         helpRequest.setTeamId(incoming.getTeamId());
         helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());
-        helpRequest.setExplanation(incoming.getExplanation());
-
         helpRequest.setExplanation(incoming.getExplanation());
         helpRequest.setRequestTime(incoming.getRequestTime());
         helpRequest.setSolved(incoming.getSolved());

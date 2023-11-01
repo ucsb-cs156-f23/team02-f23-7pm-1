@@ -9,6 +9,7 @@ import edu.ucsb.cs156.example.repositories.HelpRequestsRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -63,23 +64,25 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
 
                 // arrange
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
+                boolean result = Boolean.parseBoolean("true"); 
                 HelpRequests helpRequest1 = HelpRequests.builder()
                  .requesterEmail("m@gmail.com")
                                 .teamId("7pm-1")
                                 .tableOrBreakoutRoom("t3")
                                 .explanation("download")
                                 .requestTime(ldt1)
-                                .solved(false)
+                                .solved(result)
                                 .build();
 
                 LocalDateTime ldt2 = LocalDateTime.parse("2022-03-11T00:00:00");
+                boolean result2 = Boolean.parseBoolean("true"); 
                 HelpRequests helpRequest2 = HelpRequests.builder()
                  .requesterEmail("n@gmail.com")
                                 .teamId("7pm-1")
                                 .tableOrBreakoutRoom("t3")
                                 .explanation("download")
                                 .requestTime(ldt2)
-                                .solved(true)
+                                .solved(result2)
                                 .build();
 
                 ArrayList<HelpRequests> helpRequests = new ArrayList<>();
@@ -120,21 +123,21 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-
+                boolean result = Boolean.parseBoolean("true"); 
                 HelpRequests helpRequest = HelpRequests.builder()
                  .requesterEmail("m@gmail.com")
                                 .teamId("2")
                                 .tableOrBreakoutRoom("t3")
                                 .explanation("download")
                                 .requestTime(ldt1)
-                                .solved(false)
+                                .solved(result)
                                 .build();
 
                 when(helpRequestsRepository.save(eq(helpRequest))).thenReturn(helpRequest);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/helprequests/post?requesterEmail=m@gmail.com&teamId=2&tableOrBreakoutRoom=t3&requestTime=2022-01-03T00:00:00&explanation=download&solved=false")
+                                post("/api/helprequests/post?requesterEmail=m@gmail.com&teamId=2&tableOrBreakoutRoom=t3&requestTime=2022-01-03T00:00:00&explanation=download&solved=true")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -161,6 +164,7 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
 
                 // arrange
                 LocalDateTime ldt = LocalDateTime.parse("2022-01-03T00:00:00");
+                boolean result = Boolean.parseBoolean("true"); 
 
                 HelpRequests helpRequest = HelpRequests.builder()
                                 .requesterEmail("m@gmail.com")
@@ -168,7 +172,7 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
                                 .tableOrBreakoutRoom("table 3")
                                 .explanation("download issue")
                                 .requestTime(ldt)
-                                .solved(false)
+                                .solved(result)
                                 .build();
 
                 when(helpRequestsRepository.findById(eq(7L))).thenReturn(Optional.of(helpRequest));
@@ -214,14 +218,14 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-
+                boolean result = Boolean.parseBoolean("true"); 
                 HelpRequests helpRequest = HelpRequests.builder()
                                 .requesterEmail("m@gmail.com")
                                 .teamId("7pm-1")
                                 .tableOrBreakoutRoom("table 3")
                                 .explanation("download issue")
                                 .requestTime(ldt1)
-                                .solved(false)
+                                .solved(result)
                                 .build();
 
                 when(helpRequestsRepository.findById(eq(15L))).thenReturn(Optional.of(helpRequest));
@@ -269,23 +273,24 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
                 LocalDateTime ldt2 = LocalDateTime.parse("2023-01-03T00:00:00");
-
+                boolean result = Boolean.parseBoolean("true"); 
+                boolean result2 = Boolean.parseBoolean("false"); 
                 HelpRequests helpRequestOrig = HelpRequests.builder()
                                 .requesterEmail("m@gmail.com")
-                                .teamId("7pm-1")
+                                .teamId("7pm-3")
                                 .requestTime(ldt1)
-                                .solved(false)
+                                .solved(result)
                                 .explanation("download issue")
                                 .tableOrBreakoutRoom("table 4")
                                 .build();
 
                 HelpRequests helpRequestEdited = HelpRequests.builder()
-                                .requesterEmail("m@gmail.com")
+                                .requesterEmail("ma@gmail.com")
                                 .teamId("7pm-1")
                                 .requestTime(ldt2)
-                                .solved(true)
-                                .explanation("download issue")
-                                .tableOrBreakoutRoom("table 4")
+                                .solved(result2)
+                                .explanation("downloading issue")
+                                .tableOrBreakoutRoom("table 5")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(helpRequestEdited);
@@ -315,12 +320,12 @@ public class HelpRequestsControllerTests extends ControllerTestCase {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-
+                boolean result = Boolean.parseBoolean("true"); 
                 HelpRequests helpRequestEdited = HelpRequests.builder()
                                 .requesterEmail("m@gmail.com")
                                 .teamId("7pm-1")
                                 .requestTime(ldt1)
-                                .solved(false)
+                                .solved(result)
                                 .explanation("download issue")
                                 .tableOrBreakoutRoom("table 4")
                                 .build();
