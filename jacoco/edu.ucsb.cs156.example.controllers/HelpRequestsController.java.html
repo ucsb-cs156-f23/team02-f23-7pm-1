@@ -76,7 +76,7 @@ import java.time.LocalDateTime;
 <span class="fc" id="L76">        return savedHelpRequest;</span>
     }
 
-    @Operation(summary= &quot;Get a single help request&quot;)
+    @Operation(summary= &quot;Get a single help request by id&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @GetMapping(&quot;&quot;)
     public HelpRequests getById(
