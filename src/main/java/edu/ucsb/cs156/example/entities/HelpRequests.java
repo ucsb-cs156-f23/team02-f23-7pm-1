@@ -22,6 +22,7 @@ public class HelpRequests {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   
+  
   private String requesterEmail;
   private String teamId;
   private String tableOrBreakoutRoom;
