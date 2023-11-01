@@ -1,6 +1,5 @@
 package edu.ucsb.cs156.example.controllers;
 
-import edu.ucsb.cs156.example.entities.UCSBDiningCommons;
 import edu.ucsb.cs156.example.entities.UCSBOrganization;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationRepository;
@@ -40,7 +39,7 @@ public class UCSBOrganizationController extends ApiController {
         return orgs;
     }
 
-    @Operation(summary= "Create a organization")
+    @Operation(summary= "Create a new organization")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public UCSBOrganization postOrganization(
