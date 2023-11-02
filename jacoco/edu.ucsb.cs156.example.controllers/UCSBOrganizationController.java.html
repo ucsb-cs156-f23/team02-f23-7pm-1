@@ -61,5 +61,25 @@ import javax.validation.Valid;
 
 <span class="fc" id="L62">        return savedOrg;</span>
     }
+
+    @Operation(summary= &quot;Update a single organization&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public UCSBOrganization updateOrganization(
+            @Parameter(name=&quot;orgCode&quot;) @RequestParam String orgCode,
+            @RequestBody @Valid UCSBOrganization incoming) {
+
+<span class="fc" id="L72">        UCSBOrganization org = ucsbOrganizationRepository.findById(orgCode)</span>
+<span class="fc" id="L73">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganization.class, orgCode));</span>
+
+
+<span class="fc" id="L76">        org.setOrgTranslationShort(incoming.getOrgTranslationShort());</span>
+<span class="fc" id="L77">        org.setOrgTranslation(incoming.getOrgTranslation());</span>
+<span class="fc" id="L78">        org.setInactive(incoming.getInactive());</span>
+
+<span class="fc" id="L80">        ucsbOrganizationRepository.save(org);</span>
+
+<span class="fc" id="L82">        return org;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
