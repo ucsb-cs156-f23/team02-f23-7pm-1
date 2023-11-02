@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.ucsb.cs156.example.entities.UCSBMenuItemReview;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBMenuItemReviewRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class UCSBMenuItemReviewController extends ApiController {
     UCSBMenuItemReviewRepository ucsbMenuItemReviewRepository;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Create a new review")
     @PostMapping("/post")
     public UCSBMenuItemReview postUCSBMenuItemReview(
             @Parameter(name = "itemId", description = "Id for item being reviewed") @RequestParam long itemId,
@@ -57,6 +59,7 @@ public class UCSBMenuItemReviewController extends ApiController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
+    @Operation(summary = "Get all reviews")
     public Iterable<UCSBMenuItemReview> allUCSBMenuItemReviews() {
         Iterable<UCSBMenuItemReview> reviews = ucsbMenuItemReviewRepository.findAll();
         return reviews;
@@ -64,6 +67,7 @@ public class UCSBMenuItemReviewController extends ApiController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")
+    @Operation(summary = "Get one review")
     public UCSBMenuItemReview getById(
             @Parameter(name = "id") @RequestParam Long id) {
         UCSBMenuItemReview ucsbMenuItemReview = ucsbMenuItemReviewRepository.findById(id)
@@ -74,6 +78,7 @@ public class UCSBMenuItemReviewController extends ApiController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
+    @Operation(summary = "Update a review")
     public UCSBMenuItemReview updateUCSBMenuItemReview(
             @Parameter(name="id") @RequestParam Long id,
             @RequestBody @Valid UCSBMenuItemReview incoming) {
@@ -94,6 +99,7 @@ public class UCSBMenuItemReviewController extends ApiController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
+    @Operation(summary = "Delete a review")
     public Object deleteUCSBMenuItemReview(
             @Parameter(name="id") @RequestParam Long id) {
         UCSBMenuItemReview ucsbMenuItemReview = ucsbMenuItemReviewRepository.findById(id)
