@@ -134,7 +134,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         assertEquals(expectedJson, responseString);
     }
 
-        // Tests for GET /api/ucsborganization?...
+    // Tests for GET /api/ucsborganization?...
 
     @Test
     public void logged_out_users_cannot_get_by_id() throws Exception {
@@ -187,7 +187,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         verify(ucsbOrganizationRepository, times(1)).findById(eq("doesnt-exist"));
         Map<String, Object> json = responseToJson(response);
         assertEquals("EntityNotFoundException", json.get("type"));
-        assertEquals("UCSBOrganization with id doesnt-exist not found", json.get("message"));
+        assertEquals("UCSBOrganizations with id doesnt-exist not found", json.get("message"));
     }    
 
     // Tests for PUT /api/ucsborganization?...
