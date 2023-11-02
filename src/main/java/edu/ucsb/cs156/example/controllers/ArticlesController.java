@@ -50,7 +50,7 @@ public class ArticlesController extends ApiController {
     public Article postArticle(
             @Parameter(name="title") @RequestParam String title,
             @Parameter(name="url") @RequestParam String url,
-            @Parameter(name="explaination") @RequestParam String explaination,
+            @Parameter(name="explanation") @RequestParam String explanation,
             @Parameter(name="email") @RequestParam String email,
             @Parameter(name="dateAdded", description="in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("dateAdded") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateAdded)
             throws JsonProcessingException {
@@ -63,7 +63,7 @@ public class ArticlesController extends ApiController {
         Article article = new Article();
         article.setTitle(title);
         article.setUrl(url);
-        article.setExplaination(explaination);
+        article.setExplanation(explanation);
         article.setEmail(email);
         article.setDateAdded(dateAdded);
 
@@ -107,7 +107,7 @@ public class ArticlesController extends ApiController {
 
         article.setTitle(incoming.getTitle());
         article.setUrl(incoming.getUrl());
-        article.setExplaination(incoming.getExplaination());
+        article.setExplanation(incoming.getExplanation());
         article.setEmail(incoming.getEmail());
         article.setDateAdded(incoming.getDateAdded());
 

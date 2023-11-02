@@ -66,7 +66,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article article1 = Article.builder()
                                 .title("firstDayOfClasses")
                                 .url("1")
-                                .explaination("1")
+                                .explanation("1")
                                 .email("1")
                                 .dateAdded(ldt1)
                                 .build();
@@ -76,7 +76,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article article2 = Article.builder()
                                 .title("lastDayOfClasses")
                                 .url("2")
-                                .explaination("1")
+                                .explanation("1")
                                 .email("2")
                                 .dateAdded(ldt2)
                                 .build();
@@ -123,7 +123,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article article1 = Article.builder()
                                 .title("firstDayOfClasses")
                                 .url("1")
-                                .explaination("1")
+                                .explanation("1")
                                 .email("1")
                                 .dateAdded(ldt1)
                                 .build();
@@ -132,7 +132,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/articles/post?title=firstDayOfClasses&url=1&explaination=1&email=1&dateAdded=2022-01-03T00:00:00")
+                                post("/api/articles/post?title=firstDayOfClasses&url=1&explanation=1&email=1&dateAdded=2022-01-03T00:00:00")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -161,7 +161,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article article = Article.builder()
                                 .title("firstDayOfClasses")
                                 .url("1")
-                                .explaination("1")
+                                .explanation("1")
                                 .email("1")
                                 .dateAdded(ldt)
                                 .build();
@@ -212,7 +212,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article article1 = Article.builder()
                                 .title("firstDayOfClasses")
                                 .url("1")
-                                .explaination("1")
+                                .explanation("1")
                                 .email("1")
                                 .dateAdded(ldt1)
                                 .build();
@@ -266,7 +266,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article articleOrig = Article.builder()
                                 .title("firstDayOfClasses")
                                 .url("1")
-                                .explaination("1")
+                                .explanation("1")
                                 .email("1")
                                 .dateAdded(ldt1)
                                 .build();
@@ -274,7 +274,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article articleEdited = Article.builder()
                                 .title("lastDayOfClasses")
                                 .url("2")
-                                .explaination("2")
+                                .explanation("2")
                                 .email("2")
                                 .dateAdded(ldt2)
                                 .build();
@@ -310,7 +310,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                 Article articleEdited = Article.builder()
                                 .title("lastDayOfClasses")
                                 .url("2")
-                                .explaination("2")
+                                .explanation("2")
                                 .email("2")
                                 .dateAdded(ldt1)
                                 .build();
