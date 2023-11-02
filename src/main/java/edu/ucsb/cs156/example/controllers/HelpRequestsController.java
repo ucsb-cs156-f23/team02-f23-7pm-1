@@ -99,7 +99,7 @@ public class HelpRequestsController extends ApiController {
         return genericMessage("HelpRequest with id %s deleted".formatted(id));
     }
 
-    @Operation(summary= "Update a single help request")
+    @Operation(summary= "Update a help request")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
     public HelpRequests updateHelpRequests(
