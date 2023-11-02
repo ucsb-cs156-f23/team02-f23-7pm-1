@@ -64,7 +64,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         UCSBOrganization zpr = UCSBOrganization.builder()
                         .orgCode("ZPR")
                         .orgTranslationShort("ZETA PHI RHO")
-                        .orgTranslation("ZETA PHI RHO")
+                        .orgTranslation("ZETA PHI RHO FRAT")
                         .inactive(false)
                         .build();
 
@@ -72,7 +72,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                         .orgCode("SKY")
                         .orgTranslationShort("SKYDIVING CLUB")
                         .orgTranslation("SKYDIVING CLUB AT UCSB")
-                        .inactive(false)
+                        .inactive(true)
                         .build();
 
         ArrayList<UCSBOrganization> expectedOrganization = new ArrayList<>();
@@ -114,16 +114,16 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
 
         UCSBOrganization osli = UCSBOrganization.builder()
                         .orgCode("OSLI")
-                        .orgTranslationShort("STUDENT LIFE")
-                        .orgTranslation("OFFICE OF STUDENT LIFE")
-                        .inactive(false)
+                        .orgTranslationShort("STUDENT")
+                        .orgTranslation("OFFICE")
+                        .inactive(true)
                         .build();
 
         when(ucsbOrganizationRepository.save(eq(osli))).thenReturn(osli);
 
         // act
         MvcResult response = mockMvc.perform(
-            post("/api/ucsborganization/post?orgCode=OSLI&orgTranslationShort=STUDENT LIFE&orgTranslation=OFFICE OF STUDENT LIFE&inactive=false")
+            post("/api/ucsborganization/post?orgCode=OSLI&orgTranslationShort=STUDENT&orgTranslation=OFFICE&inactive=true")
                 .with(csrf()))
             .andExpect(status().isOk()).andReturn();
 
