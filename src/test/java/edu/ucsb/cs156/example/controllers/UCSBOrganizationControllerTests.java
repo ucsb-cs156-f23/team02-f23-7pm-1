@@ -40,7 +40,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
     @MockBean
     UserRepository userRepository;
 
-    // Tests for GET /api/ucsborganization/all
+     // Tests for GET /api/ucsborganization/all
 
     @Test
     public void logged_out_users_cannot_get_all() throws Exception {
@@ -64,7 +64,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         UCSBOrganization zpr = UCSBOrganization.builder()
                         .orgCode("ZPR")
                         .orgTranslationShort("ZETA PHI RHO")
-                        .orgTranslation("ZETA PHI RHO")
+                        .orgTranslation("ZETA PHI RHO FRAT")
                         .inactive(false)
                         .build();
 
@@ -72,7 +72,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                         .orgCode("SKY")
                         .orgTranslationShort("SKYDIVING CLUB")
                         .orgTranslation("SKYDIVING CLUB AT UCSB")
-                        .inactive(false)
+                        .inactive(true)
                         .build();
 
         ArrayList<UCSBOrganization> expectedOrganization = new ArrayList<>();
@@ -114,16 +114,16 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
 
         UCSBOrganization osli = UCSBOrganization.builder()
                         .orgCode("OSLI")
-                        .orgTranslationShort("STUDENT LIFE")
-                        .orgTranslation("OFFICE OF STUDENT LIFE")
-                        .inactive(false)
+                        .orgTranslationShort("STUDENT")
+                        .orgTranslation("OFFICE")
+                        .inactive(true)
                         .build();
 
         when(ucsbOrganizationRepository.save(eq(osli))).thenReturn(osli);
 
         // act
         MvcResult response = mockMvc.perform(
-            post("/api/ucsborganization/post?orgCode=OSLI&orgTranslationShort=STUDENT LIFE&orgTranslation=OFFICE OF STUDENT LIFE&inactive=false")
+            post("/api/ucsborganization/post?orgCode=OSLI&orgTranslationShort=STUDENT&orgTranslation=OFFICE&inactive=true")
                 .with(csrf()))
             .andExpect(status().isOk()).andReturn();
 
@@ -198,26 +198,26 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         // arrange
 
         UCSBOrganization zprOrig = UCSBOrganization.builder()
-                        .orgCode("ZPR")
-                        .orgTranslationShort("ZETA PHI RHO")
-                        .orgTranslation("ZETA PHI RHO")
+                        .orgCode("TPR")
+                        .orgTranslationShort("THETA PHI RHO")
+                        .orgTranslation("THETA PHI RHO")
                         .inactive(false)
                         .build();
 
         UCSBOrganization zprEdited = UCSBOrganization.builder()
-                        .orgCode("ZPR")
-                        .orgTranslationShort("ZETA PHI RHO FRAT")
-                        .orgTranslation("UCSB ZETA PHI RHO FRATERNITY")
-                        .inactive(false)
+                        .orgCode("TPR")
+                        .orgTranslationShort("THETA PHI RHO FRAT")
+                        .orgTranslation("UCSB THETA PHI RHO FRATERNITY")
+                        .inactive(true)
                         .build();
 
         String requestBody = mapper.writeValueAsString(zprEdited);
 
-        when(ucsbOrganizationRepository.findById(eq("ZPR"))).thenReturn(Optional.of(zprOrig));
+        when(ucsbOrganizationRepository.findById(eq("TPR"))).thenReturn(Optional.of(zprOrig));
 
         // act
         MvcResult response = mockMvc.perform(
-                    put("/api/ucsborganization?orgCode=ZPR")
+                    put("/api/ucsborganization?orgCode=TPR")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8")
                         .content(requestBody)
@@ -225,7 +225,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                         .andExpect(status().isOk()).andReturn();
 
         // assert
-        verify(ucsbOrganizationRepository, times(1)).findById("ZPR");
+        verify(ucsbOrganizationRepository, times(1)).findById("TPR");
         verify(ucsbOrganizationRepository, times(1)).save(zprEdited); // should be saved with updated info
         String responseString = response.getResponse().getContentAsString();
         assertEquals(requestBody, responseString);
@@ -238,7 +238,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
             // arrange
 
             UCSBOrganization editedOrg = UCSBOrganization.builder()
-                        .orgCode("COOL")
+                        .orgCode("test")
                         .orgTranslationShort("COOL CLUB")
                         .orgTranslation("THE UCSB COOL CLUB")
                         .inactive(true)
@@ -246,11 +246,11 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
 
             String requestBody = mapper.writeValueAsString(editedOrg);
 
-            when(ucsbOrganizationRepository.findById(eq("COOL"))).thenReturn(Optional.empty());
+            when(ucsbOrganizationRepository.findById(eq("test"))).thenReturn(Optional.empty());
 
             // act
             MvcResult response = mockMvc.perform(
-                            put("/api/ucsborganization?orgCode=COOL")
+                            put("/api/ucsborganization?orgCode=test")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .characterEncoding("utf-8")
                                             .content(requestBody)
@@ -258,8 +258,8 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                             .andExpect(status().isNotFound()).andReturn();
 
             // assert
-            verify(ucsbOrganizationRepository, times(1)).findById("COOL");
+            verify(ucsbOrganizationRepository, times(1)).findById("test");
             Map<String, Object> json = responseToJson(response);
-            assertEquals("UCSBOrganization with id COOL not found", json.get("message"));
+            assertEquals("UCSBOrganization with id test not found", json.get("message"));
     }
 }
