@@ -1,6 +1,5 @@
 package edu.ucsb.cs156.example.controllers;
 
-import edu.ucsb.cs156.example.entities.UCSBDiningCommons;
 import edu.ucsb.cs156.example.entities.UCSBOrganization;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationRepository;
@@ -76,7 +75,7 @@ public class UCSBOrganizationController extends ApiController {
     @Operation(summary= "Delete a UCSBOrganization")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
-    public Object deleteCommons(
+    public Object deleteOrganization(
             @Parameter(name="orgCode") @RequestParam String orgCode) {
         UCSBOrganization org = ucsbOrganizationRepository.findById(orgCode)
             .orElseThrow(() -> new EntityNotFoundException(UCSBOrganization.class, orgCode));

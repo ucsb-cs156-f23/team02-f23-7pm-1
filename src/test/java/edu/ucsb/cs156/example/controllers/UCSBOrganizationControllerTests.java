@@ -3,7 +3,6 @@ package edu.ucsb.cs156.example.controllers;
 import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
 import edu.ucsb.cs156.example.ControllerTestCase;
-import edu.ucsb.cs156.example.entities.UCSBDiningCommons;
 import edu.ucsb.cs156.example.entities.UCSBOrganization;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationRepository;
 
@@ -209,16 +208,16 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-            delete("/api/ucsborganization?code=fsae")
+            delete("/api/ucsborganization?orgCode=FSAE")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
         // assert
-        verify(ucsbOrganizationRepository, times(1)).findById("fsae");
+        verify(ucsbOrganizationRepository, times(1)).findById("FSAE");
         verify(ucsbOrganizationRepository, times(1)).delete(any());
 
         Map<String, Object> json = responseToJson(response);
-        assertEquals("UCSBOrganization with id fsae deleted", json.get("message"));
+        assertEquals("UCSBOrganization with id FSAE deleted", json.get("message"));
     }
 
     @WithMockUser(roles = { "ADMIN", "USER" })
@@ -231,7 +230,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-            delete("/api/ucsborganization?code=test")
+            delete("/api/ucsborganization?orgCode=test")
                     .with(csrf()))
             .andExpect(status().isNotFound()).andReturn();
 
