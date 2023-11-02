@@ -99,7 +99,7 @@ import java.time.LocalDateTime;
 <span class="fc" id="L99">        return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
     }
 
-    @Operation(summary= &quot;Update a single help request&quot;)
+    @Operation(summary= &quot;Update a help request&quot;)
     @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
     @PutMapping(&quot;&quot;)
     public HelpRequests updateHelpRequests(
