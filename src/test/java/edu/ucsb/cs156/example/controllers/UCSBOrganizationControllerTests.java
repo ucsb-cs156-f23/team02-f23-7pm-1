@@ -3,6 +3,7 @@ package edu.ucsb.cs156.example.controllers;
 import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
 import edu.ucsb.cs156.example.ControllerTestCase;
+import edu.ucsb.cs156.example.entities.UCSBDiningCommons;
 import edu.ucsb.cs156.example.entities.UCSBOrganization;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationRepository;
 
@@ -188,7 +189,57 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
         Map<String, Object> json = responseToJson(response);
         assertEquals("EntityNotFoundException", json.get("type"));
         assertEquals("UCSBOrganization with id doesnt-exist not found", json.get("message"));
-    }    
+    }
+    
+    // Tests for DELETE /api/ucsbdiningcommons?...
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void admin_can_delete_a_date() throws Exception {
+        // arrange
+
+        UCSBOrganization fsae = UCSBOrganization.builder()
+                        .orgCode("FSAE")
+                        .orgTranslationShort("GAUCHO RACING")
+                        .orgTranslation("GAUCHO RACING FSAE TEAM")
+                        .inactive(true)
+                        .build();
+
+        when(ucsbOrganizationRepository.findById(eq("FSAE"))).thenReturn(Optional.of(fsae));
+
+        // act
+        MvcResult response = mockMvc.perform(
+            delete("/api/ucsborganization?code=fsae")
+                        .with(csrf()))
+                .andExpect(status().isOk()).andReturn();
+
+        // assert
+        verify(ucsbOrganizationRepository, times(1)).findById("fsae");
+        verify(ucsbOrganizationRepository, times(1)).delete(any());
+
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("UCSBOrganization with id fsae deleted", json.get("message"));
+    }
+
+    @WithMockUser(roles = { "ADMIN", "USER" })
+    @Test
+    public void admin_tries_to_delete_non_existant_organization_and_gets_right_error_message()
+            throws Exception {
+        // arrange
+
+        when(ucsbOrganizationRepository.findById(eq("test"))).thenReturn(Optional.empty());
+
+        // act
+        MvcResult response = mockMvc.perform(
+            delete("/api/ucsborganization?code=test")
+                    .with(csrf()))
+            .andExpect(status().isNotFound()).andReturn();
+
+        // assert
+        verify(ucsbOrganizationRepository, times(1)).findById("test");
+        Map<String, Object> json = responseToJson(response);
+        assertEquals("UCSBOrganization with id test not found", json.get("message"));
+    }
 
     // Tests for PUT /api/ucsborganization?...
 
