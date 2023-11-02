@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f23/team02-f23-7pm-1
 owner: ucsb-cs156-f23
 repo_name: team02-f23-7pm-1
-pull_requests: [{"author":{"id":"MDQ6VXNlcjczNDExMjEw","is_bot":false,"login":"mageswarankk","name":"Karankumar Mageswaran"},"headRefName":"Karankumar-UCSBOrganization-DELETE","number":75,"title":"Added DELETE function to Controller and Tests for UCSBOrganization","url":"https://github.com/ucsb-cs156-f23/team02-f23-7pm-1/pull/75"},{"author":{"id":"MDQ6VXNlcjczNDExMjEw","is_bot":false,"login":"mageswarankk","name":"Karankumar Mageswaran"},"headRefName":"Karankumar-UCSBOrganization-GET","number":74,"title":"Added GET function to Controller and Tests for UCSBOrganization","url":"https://github.com/ucsb-cs156-f23/team02-f23-7pm-1/pull/74"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjczNDExMjEw","is_bot":false,"login":"mageswarankk","name":"Karankumar Mageswaran"},"headRefName":"Karankumar-UCSBOrganization-DELETE","number":75,"title":"Added DELETE function to Controller and Tests for UCSBOrganization","url":"https://github.com/ucsb-cs156-f23/team02-f23-7pm-1/pull/75"}]
