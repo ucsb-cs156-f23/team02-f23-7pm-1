@@ -11,8 +11,6 @@
 
 Instructions: <https://ucsb-cs156.github.io/f23/lab/team02.html>
 
-TODO: Add a link to the deployed Dokku app for your team here, e.g. (We're missing QA Deployment)
-
 Deployments:
 
 * Prod: <https://team02.dokku-09.cs.ucsb.edu>
