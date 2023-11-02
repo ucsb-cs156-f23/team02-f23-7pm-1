@@ -3,7 +3,6 @@ package edu.ucsb.cs156.example.controllers;
 import edu.ucsb.cs156.example.repositories.UserRepository;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
 import edu.ucsb.cs156.example.ControllerTestCase;
-import edu.ucsb.cs156.example.entities.UCSBDiningCommons;
 import edu.ucsb.cs156.example.entities.UCSBOrganization;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationRepository;
 
@@ -179,7 +178,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
 
     @WithMockUser(roles = { "ADMIN", "USER" })
     @Test
-    public void admin_cannot_edit_commons_that_does_not_exist() throws Exception {
+    public void admin_cannot_edit_organization_that_does_not_exist() throws Exception {
             // arrange
 
             UCSBOrganization editedOrg = UCSBOrganization.builder()
@@ -195,7 +194,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
 
             // act
             MvcResult response = mockMvc.perform(
-                            put("/api/ucsborganization?code=COOL")
+                            put("/api/ucsborganization?orgCode=COOL")
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .characterEncoding("utf-8")
                                             .content(requestBody)
