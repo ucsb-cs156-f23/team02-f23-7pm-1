@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f23/team02-f23-7pm-1
 owner: ucsb-cs156-f23
 repo_name: team02-f23-7pm-1
-pull_requests: []
+pull_requests: [{"author":{"id":"U_kgDOBX3XnA","is_bot":false,"login":"daniel-li2021","name":""},"headRefName":"dl-RecommendationRequest-create-db","number":76,"title":"dl- RecommendationRequest add functions for Get Put and Delete, #22 #23 #24","url":"https://github.com/ucsb-cs156-f23/team02-f23-7pm-1/pull/76"}]
