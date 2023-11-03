@@ -70,4 +70,51 @@ public class RecommendationRequestController extends ApiController {
 
         return savedRecRequest;
     }
+
+
+    @Operation(summary= "Get a single recommendation request")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("")
+    public RecommendationRequest getRecommendationRequest(
+            @Parameter(name="id") @RequestParam Long id) {RecommendationRequest recommendationRequest = recommendationRequestRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+
+        return recommendationRequest;
+    }
+
+    @Operation(summary= "Delete a recommendation request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("")
+    public Object deleteRecommendationRequest(
+            @Parameter(name="id", description="Id of recommendation request to delete", example="1") @RequestParam Long id) {
+        RecommendationRequest recRequest = recommendationRequestRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+
+        recommendationRequestRepository.delete(recRequest);
+        return genericMessage("RecommendationRequest with id %s deleted".formatted(id));
+    }
+
+
+    @Operation(summary= "Update a recommendation request")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public RecommendationRequest updateRecommendationRequest(
+        @Parameter(name="id") @RequestParam Long id,
+        @RequestBody @Valid RecommendationRequest incoming) {
+
+        RecommendationRequest recRequest = recommendationRequestRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+
+        // recRequest.setRequesterEmail(incoming.getRequesterEmail());d
+        recRequest.setProfessorEmail(incoming.getProfessorEmail());
+        recRequest.setExplanation(incoming.getExplanation());
+        recRequest.setDateRequested(incoming.getDateRequested());
+        recRequest.setDateNeeded(incoming.getDateNeeded());
+        recRequest.setDone(incoming.getDone());
+
+        recommendationRequestRepository.save(recRequest);
+
+        return recRequest;
+    }
 }
+
+
