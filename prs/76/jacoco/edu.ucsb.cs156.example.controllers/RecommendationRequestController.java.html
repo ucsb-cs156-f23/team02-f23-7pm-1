@@ -104,7 +104,7 @@ import java.time.LocalDateTime;
 <span class="fc" id="L104">        RecommendationRequest recRequest = recommendationRequestRepository.findById(id)</span>
 <span class="fc" id="L105">            .orElseThrow(() -&gt; new EntityNotFoundException(RecommendationRequest.class, id));</span>
 
-<span class="fc" id="L107">        recRequest.setRequesterEmail(incoming.getRequesterEmail());</span>
+        // recRequest.setRequesterEmail(incoming.getRequesterEmail());d
 <span class="fc" id="L108">        recRequest.setProfessorEmail(incoming.getProfessorEmail());</span>
 <span class="fc" id="L109">        recRequest.setExplanation(incoming.getExplanation());</span>
 <span class="fc" id="L110">        recRequest.setDateRequested(incoming.getDateRequested());</span>
