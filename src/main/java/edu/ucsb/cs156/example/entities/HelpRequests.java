@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-
+//Test if making helprequests lowercase versus uppercase impacts
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
