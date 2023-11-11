@@ -11,23 +11,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-//Test if making helprequests lowercase versus uppercase impacts
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "helprequests")
-public class HelpRequests {
+@Entity(name = "recommendationrequests")
+public class RecommendationRequest {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)        
+
   private long id;
 
-
-  
   private String requesterEmail;
-  private String teamId;
-  private String tableOrBreakoutRoom;
+  private String professorEmail;  
   private String explanation;
-  private LocalDateTime requestTime;
-  private boolean solved;
+  private LocalDateTime dateRequested;
+  private LocalDateTime dateNeeded;
+  private boolean done;
 }
